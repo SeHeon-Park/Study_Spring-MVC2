@@ -15,15 +15,13 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Controller
-@RequestMapping("/validation/v2/items")
+@RequestMapping("/validation/v3/items")
 @RequiredArgsConstructor
-public class ValidationItemControllerV2 {
+public class ValidationItemControllerV3 {
 
     private final ItemRepository itemRepository;
     private final ItemValidator itemValidator;
@@ -83,7 +81,7 @@ public class ValidationItemControllerV2 {
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
         redirectAttributes.addAttribute("status", true);
-        return "redirect:/validation/v2/items/{itemId}";
+        return "redirect:/validation/v3/items/{itemId}";
     }
 
 //    @PostMapping("/add")
@@ -116,7 +114,7 @@ public class ValidationItemControllerV2 {
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
         redirectAttributes.addAttribute("status", true);
-        return "redirect:/validation/v2/items/{itemId}";
+        return "redirect:/validation/v3/items/{itemId}";
     }
 
 //    @PostMapping("/add")
@@ -149,7 +147,7 @@ public class ValidationItemControllerV2 {
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
         redirectAttributes.addAttribute("status", true);
-        return "redirect:/validation/v2/items/{itemId}";
+        return "redirect:/validation/v3/items/{itemId}";
     }
 
 //    @PostMapping("/add")
@@ -182,7 +180,7 @@ public class ValidationItemControllerV2 {
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
         redirectAttributes.addAttribute("status", true);
-        return "redirect:/validation/v2/items/{itemId}";
+        return "redirect:/validation/v3/items/{itemId}";
     }
 
 //    @PostMapping("/add")
@@ -199,7 +197,7 @@ public class ValidationItemControllerV2 {
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
         redirectAttributes.addAttribute("status", true);
-        return "redirect:/validation/v2/items/{itemId}";
+        return "redirect:/validation/v3/items/{itemId}";
     }
 
     @PostMapping("/add")
@@ -214,7 +212,7 @@ public class ValidationItemControllerV2 {
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
         redirectAttributes.addAttribute("status", true);
-        return "redirect:/validation/v2/items/{itemId}";
+        return "redirect:/validation/v3/items/{itemId}";
     }
 
     @GetMapping("/{itemId}/edit")
@@ -227,7 +225,7 @@ public class ValidationItemControllerV2 {
     @PostMapping("/{itemId}/edit")
     public String edit(@PathVariable Long itemId, @ModelAttribute Item item) {
         itemRepository.update(itemId, item);
-        return "redirect:/validation/v2/items/{itemId}";
+        return "redirect:/validation/v3/items/{itemId}";
     }
 
 }
