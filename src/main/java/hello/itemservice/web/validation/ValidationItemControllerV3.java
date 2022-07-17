@@ -35,20 +35,20 @@ public class ValidationItemControllerV3 {
     public String items(Model model) {
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
-        return "validation/v2/items";
+        return "validation/v3/items";
     }
 
     @GetMapping("/{itemId}")
     public String item(@PathVariable long itemId, Model model) {
         Item item = itemRepository.findById(itemId);
         model.addAttribute("item", item);
-        return "validation/v2/item";
+        return "validation/v3/item";
     }
 
     @GetMapping("/add")
     public String addForm(Model model) {
         model.addAttribute("item", new Item());
-        return "validation/v2/addForm";
+        return "validation/v3/addForm";
     }
 
 //    @PostMapping("/add")
@@ -75,7 +75,7 @@ public class ValidationItemControllerV3 {
         //검증에 실패하면 다시 입력 폼으로
         if (bindingResult.hasErrors()) {
             log.info("errir : {}", bindingResult);
-            return "validation/v2/addForm";
+            return "validation/v3/addForm";
         }
 
         Item savedItem = itemRepository.save(item);
@@ -108,7 +108,7 @@ public class ValidationItemControllerV3 {
         //검증에 실패하면 다시 입력 폼으로
         if (bindingResult.hasErrors()) {
             log.info("errir : {}", bindingResult);
-            return "validation/v2/addForm";
+            return "validation/v3/addForm";
         }
 
         Item savedItem = itemRepository.save(item);
@@ -141,7 +141,7 @@ public class ValidationItemControllerV3 {
         //검증에 실패하면 다시 입력 폼으로
         if (bindingResult.hasErrors()) {
             log.info("errir : {}", bindingResult);
-            return "validation/v2/addForm";
+            return "validation/v3/addForm";
         }
 
         Item savedItem = itemRepository.save(item);
@@ -174,7 +174,7 @@ public class ValidationItemControllerV3 {
         //검증에 실패하면 다시 입력 폼으로
         if (bindingResult.hasErrors()) {
             log.info("errir : {}", bindingResult);
-            return "validation/v2/addForm";
+            return "validation/v3/addForm";
         }
 
         Item savedItem = itemRepository.save(item);
@@ -191,7 +191,7 @@ public class ValidationItemControllerV3 {
         //검증에 실패하면 다시 입력 폼으로
         if (bindingResult.hasErrors()) {
             log.info("errir : {}", bindingResult);
-            return "validation/v2/addForm";
+            return "validation/v3/addForm";
         }
 
         Item savedItem = itemRepository.save(item);
@@ -203,10 +203,18 @@ public class ValidationItemControllerV3 {
     @PostMapping("/add")
     public String addItemV6(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
+        // 복합 룰은 @ScriptAssert보단 자바 코드가 나음!
+        if (item.getPrice() != null && item.getQuantity() != null) {
+            int resultPrice = item.getPrice() * item.getQuantity();
+            if (resultPrice < 10000) {
+                bindingResult.addError(new ObjectError("item", new String[]{"totalPriceMin"}, new Object[]{10000, resultPrice}, null));
+            }
+        }
+
         //검증에 실패하면 다시 입력 폼으로
         if (bindingResult.hasErrors()) {
             log.info("errir : {}", bindingResult);
-            return "validation/v2/addForm";
+            return "validation/v3/addForm";
         }
 
         Item savedItem = itemRepository.save(item);
@@ -219,7 +227,7 @@ public class ValidationItemControllerV3 {
     public String editForm(@PathVariable Long itemId, Model model) {
         Item item = itemRepository.findById(itemId);
         model.addAttribute("item", item);
-        return "validation/v2/editForm";
+        return "validation/v3/editForm";
     }
 
     @PostMapping("/{itemId}/edit")
